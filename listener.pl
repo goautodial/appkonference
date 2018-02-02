@@ -139,7 +139,7 @@ sub ConferenceDTMF {
 	$key = shift;
 	$muted = shift;
 
-	if ($key) {
+	if ($key =~ /^[0-9]+$/) {
 		$channelLC = "";
 		$channelLC3way = "";
 		#get live channel
