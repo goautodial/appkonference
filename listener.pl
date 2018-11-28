@@ -347,10 +347,26 @@ sub ConferenceJoin {
 			$channel = $channel.";2";
 		}
 
-		if ($member == 1) {
-			print STDERR "Playing ($conference): You're the only person..\n";
-			command("Action: Command${EOL}Command: konference play sound $channel conf-onlyperson-original mute${BLANK}");
-		}
+                $sql = "SELECT channel FROM online WHERE conference='$conference' GROUP BY channel";
+                my $sth = $dbh->prepare($sql);
+                $sth->execute;
+                $i = 0;
+
+                while (@row = $sth->fetchrow_array) {
+                        $ochannel[$i] = $row[0];
+
+                        if ($channel =~ /^Local\/9999/) {
+                                print STDERR "Previous session ($ochannel[$i]) found. Removing..\n";
+                                command("Action: Command${EOL}Command: konference kickchannel $ochannel[$i]${BLANK}");
+                        }
+
+                        $i++;
+                }
+
+                if ($channel =~ /^Local\/9999/) {
+                        print STDERR "Playing ($conference): You're the only person..\n";
+                        command("Action: Command${EOL}Command: konference play sound $channel conf-onlyperson-original mute${BLANK}");
+                }
 
 		$sql = 'INSERT INTO online (member_id,conference,channel,uniqueid,number,name,scoreid) values ("'.$member.'","' . $conference .'","'.$channel.'","'.$uniqueid.'","'.$number.'","'.$name.'","'.$scoreid.'")';
 		#print "$sql \n";
