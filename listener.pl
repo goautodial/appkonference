@@ -35,8 +35,8 @@ my $BLANK = $EOL x 2;
 my $mysql_auto_reconnect = 1;
 my $dbh = "";
 #######Mysql Information####################
-my $mysql_username = "goautodialu";
-my $mysql_password = "pancit8888";
+my $mysql_username = "asterisku";
+my $mysql_password = "asterisku1234";
 my $mysql_db = "asterisk";
 my $mysql_host = "localhost";
 
