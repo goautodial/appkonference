@@ -139,7 +139,9 @@ sub ConferenceDTMF {
 	$key = shift;
 	$muted = shift;
 
-	if ($key =~ /^[0-9]+$/) {
+        # https://goautodial.org/issues/7303
+        # if ($key =~ /^[0-9]+$/ | "#" | "*") {
+        if ($key) {
 		$channelLC = "";
 		$channelLC3way = "";
 		#get live channel
